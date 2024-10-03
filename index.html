@@ -325,27 +325,32 @@ Check your email for the confirmation of your purchase. If you still don’t hav
  <br>
 
                    <!-- JavaScript for 'Listen' button -->
- <script>
-    let isPlaying = false;
-    let speech;
+   <script>
+        let isPlaying = false;
+        let speech;
 
-    document.getElementById('listen-button').addEventListener('click', toggleSpeech);
+        document.getElementById('listen-button').addEventListener('click', toggleSpeech);
 
-    function toggleSpeech() {
-        const content = document.getElementById('content').innerText;
+        function toggleSpeech() {
+            const content = document.getElementById('content').innerText;
 
-        if (!isPlaying) {
-            speech = new SpeechSynthesisUtterance(content);
-            window.speechSynthesis.speak(speech);
-            document.getElementById('listen-button').innerHTML = '<i class="fas fa-pause"></i> Pause';
-            isPlaying = true;
-        } else {
-            window.speechSynthesis.cancel();
-            document.getElementById('listen-button').innerHTML = '<i class="fas fa-play"></i> Listen';
-            isPlaying = false;
+            if (!isPlaying) {
+                speech = new SpeechSynthesisUtterance(content);
+                speech.onend = function() {
+                    document.getElementById('listen-button').innerHTML = '<i class="fas fa-play"></i> Listen';
+                    isPlaying = false;
+                };
+                window.speechSynthesis.speak(speech);
+                document.getElementById('listen-button').innerHTML = '<i class="fas fa-pause"></i> Pause';
+                isPlaying = true;
+            } else {
+                window.speechSynthesis.cancel();
+                document.getElementById('listen-button').innerHTML = '<i class="fas fa-play"></i> Listen';
+                isPlaying = false;
+            }
         }
-    }
-</script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-0WYmVns2Xj8qA6E8WXbcj3kVRPQeXh4MBSqZc8ZT0WbQ6z7nQ1bH1SzzjC8pUu6J" crossorigin="anonymous"></script>
+    </script>
             </div>
             <div class="col-md-1"></div>
         </div>
